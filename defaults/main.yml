@@ -19,6 +19,7 @@ percona_server_user_root_cnf_preset:
       - name: password
         value: "'{{ percona_server_root_password }}'"
 percona_server_user_root_cnf: "{{ percona_server_user_root_cnf_preset }}"
+percona_server_user_hide_passwords: true
 
 percona_server_install:
   - xtrabackup
