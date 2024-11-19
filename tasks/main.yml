@@ -18,6 +18,12 @@
     - percona-server
     - percona-server-repository
 
+- import_tasks: clean.yml
+  tags:
+    - configuration
+    - percona-server
+    - percona-server-clean
+
 - import_tasks: install.yml
   tags:
     - configuration
