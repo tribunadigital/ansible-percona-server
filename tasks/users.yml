@@ -1,12 +1,16 @@
 # tasks file
 ---
 - name: users | create (default hosts)
-  mysql_user:
+  no_log: true
+  community.mysql.mysql_user:
     name: "{{ item[0].name }}"
     password: "{{ item[0].password }}"
     priv: "{{ item[0].privs | join('/') }}"
     host: "{{ item[1] }}"
     state: present
+    check_implicit_admin: true
+    login_user: "{{ percona_server_root_username }}"
+    login_password: "{{ percona_server_root_password }}"
   with_nested:
     - "{{ percona_server_users_present | selectattr('hosts', 'undefined') | list }}"
     - "{{ percona_server_users_present_hosts }}"
@@ -15,13 +19,17 @@
     - percona-server-users-create-default-hosts
 
 - name: users | create (custom hosts)
-  mysql_user:
+  no_log: true
+  community.mysql.mysql_user:
     name: "{{ item[0].name }}"
     password: "{{ item[0].password }}"
     priv: "{{ item[0].privs | join('/') }}"
     host: "{{ item[1] }}"
     tls_requires: "{{ item[0].tls_requires | default({}) }}"
     state: present
+    check_implicit_admin: true
+    login_user: "{{ percona_server_root_username }}"
+    login_password: "{{ percona_server_root_password }}"
   with_subelements:
     - "{{ percona_server_users_present | selectattr('hosts', 'defined') | list }}"
     - hosts
@@ -30,10 +38,13 @@
     - percona-server-users-create-custom-hosts
 
 - name: users | drop (default hosts)
-  mysql_user:
+  community.mysql.mysql_user:
     name: "{{ item[0].name }}"
     host: "{{ item[1] }}"
     state: absent
+    check_implicit_admin: true
+    login_user: "{{ percona_server_root_username }}"
+    login_password: "{{ percona_server_root_password }}"
   with_nested:
     - "{{ percona_server_users_absent | selectattr('hosts', 'undefined') | list }}"
     - "{{ percona_server_users_absent_hosts }}"
@@ -42,10 +53,13 @@
     - percona-server-users-drop-default-hosts
 
 - name: users | drop (custom hosts)
-  mysql_user:
+  community.mysql.mysql_user:
     name: "{{ item[0].name }}"
     host: "{{ item[1] }}"
     state: absent
+    check_implicit_admin: true
+    login_user: "{{ percona_server_root_username }}"
+    login_password: "{{ percona_server_root_password }}"
   with_subelements:
     - "{{ percona_server_users_absent | selectattr('hosts', 'defined') | list }}"
     - hosts

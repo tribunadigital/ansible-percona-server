@@ -1,19 +1,25 @@
 # tasks file
 ---
 - name: databases | create
-  mysql_db:
+  community.mysql.mysql_db:
     name: "{{ item.name }}"
     collation: "{{ item.collation | default('utf8_general_ci') }}"
     encoding: "{{ item.encoding | default('utf8') }}"
     state: present
+    check_implicit_admin: true
+    login_user: "{{ percona_server_root_username }}"
+    login_password: "{{ percona_server_root_password }}"
   with_items: "{{ percona_server_databases_present }}"
   tags:
     - percona-server-databases-create
 
 - name: databases | drop
-  mysql_db:
+  community.mysql.mysql_db:
     name: "{{ item.name }}"
     state: absent
+    check_implicit_admin: true
+    login_user: "{{ percona_server_root_username }}"
+    login_password: "{{ percona_server_root_password }}"
   with_items: "{{ percona_server_databases_absent }}"
   tags:
     - percona-server-databases-drop

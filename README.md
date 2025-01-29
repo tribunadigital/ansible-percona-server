@@ -11,12 +11,16 @@ Set up a [percona-server](https://www.percona.com/software/mysql-database/percon
 * `tee` (will not be installed)
 * `software-properties-common` (will be installed)
 * `dirmngr` (will be installed)
+* `gpg-agent` (will be installed)
+* `apt-transport-https` (will be installed)
+* `debconf-utils` (will be installed)
 
 #### Variables
 
 ##### General
 
 * `percona_server_version`: [default: `5.7`]: Version to install (e.g. `5.6`)
+* `percona_server_root_username`: [default: `root`]: Root username
 * `percona_server_root_password`: [default: `+eswuw9uthUteFreyAqu`]: Root password **Make sure to change!**
 
 * `percona_server_install`: [`['xtrabackup']`]: Additional packages to install
@@ -110,7 +114,7 @@ None
 ---
 - hosts: all
   roles:
-    - percona-server
+    - oefenweb.percona-server
 ```
 
 ##### Configure databases and users
@@ -119,7 +123,7 @@ None
 ---
 - hosts: all
   roles:
-    - percona-server
+    - oefenweb.percona-server
   vars:
     percona_server_databases_present:
       - name: ipsum
@@ -159,7 +163,7 @@ None
 ```yaml
 - hosts: all
   roles:
-    - percona-server
+    - oefenweb.percona-server
   vars:
     percona_server_ssl_map:
       ca-cert:
@@ -201,7 +205,7 @@ None
 ```yaml
 - hosts: master
   roles:
-    - percona-server
+    - oefenweb.percona-server
   vars:
     percona_server_users_present:
       - name: replicator
@@ -227,8 +231,9 @@ None
 
 - hosts: slave
   roles:
-    - percona-server
+    - oefenweb.percona-server
   vars:
+    percona_server_users_present:
       - name: replicator
         password: 'replicator'
         privs:
@@ -261,7 +266,7 @@ None
 ```yaml
 - hosts: master1
   roles:
-    - percona-server
+    - oefenweb.percona-server
   vars:
     percona_server_users_present:
       - name: replicator
@@ -296,7 +301,7 @@ None
 
 - hosts: master2
   roles:
-    - percona-server
+    - oefenweb.percona-server
   vars:
     percona_server_users_present:
       - name: replicator
