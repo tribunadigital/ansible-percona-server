@@ -28,12 +28,14 @@
     - percona-server
     - percona-server-clean
 
+
 - name: install
   ansible.builtin.import_tasks: install.yml
   tags:
     - configuration
     - percona-server
     - percona-server-install
+
 
 - name: configure
   ansible.builtin.import_tasks: configure.yml
@@ -50,6 +52,7 @@
     - percona-server-toolkit-udfs
   when: percona_server_toolkit_udfs_manage | bool
 
+
 - name: zoneinfo
   ansible.builtin.import_tasks: zoneinfo.yml
   tags:
@@ -58,12 +61,14 @@
     - percona-server-zoneinfo
   when: percona_server_zoneinfo_manage | bool
 
+
 - name: databases
   ansible.builtin.import_tasks: databases.yml
   tags:
     - configuration
     - percona-server
     - percona-server-databases
+
 
 - name: users
   ansible.builtin.import_tasks: users.yml
@@ -72,6 +77,7 @@
     - percona-server
     - percona-server-users
 
+
 - name: plugins
   ansible.builtin.import_tasks: plugins.yml
   tags:
@@ -79,12 +85,14 @@
     - percona-server
     - percona-server-plugins
 
+
 - name: queries
   ansible.builtin.import_tasks: queries.yml
   tags:
     - configuration
     - percona-server
     - percona-server-queries
+
 
 - name: ib logfile
   ansible.builtin.import_tasks: ib-logfile.yml

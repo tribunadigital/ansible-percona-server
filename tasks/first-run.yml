@@ -2,6 +2,7 @@
 ---
 - name: first-run | check
   ansible.builtin.shell: >
+  shell: >
     dpkg-query -W -f='${Status}' percona-server-server{{ percona_server_version_deb }} | grep -q 'install ok installed'
   register: _mysqld_installed
   changed_when: false

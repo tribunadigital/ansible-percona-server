@@ -22,6 +22,7 @@
   when:
     - percona_server_version is version('8.0', '==')
     - percona_server_use_legacy_auth_method | bool
+    - percona_server_use_legacy_auth_method
   tags:
     - percona-server-install-configure-debconf
 

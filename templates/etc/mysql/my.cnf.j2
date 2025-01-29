@@ -21,6 +21,7 @@
 {% endif %}
 
 {% if percona_server_version is version('8.0', '==') and percona_server_use_legacy_auth_method | bool %}
+{% if percona_server_version is version('8.0', '==') and percona_server_use_legacy_auth_method %}
 [mysqld]
 default-authentication-plugin = mysql_native_password
 {% endif %}
