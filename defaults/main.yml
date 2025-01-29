@@ -6,6 +6,7 @@ percona_server_root_username: root
 percona_server_root_password: '+eswuw9uthUteFreyAqu'
 
 percona_server_use_legacy_auth_method: false
+percona_server_etc_mysql_my_cnf_alternatives: false
 
 percona_server_etc_my_cnf: []
 
