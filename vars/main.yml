@@ -97,3 +97,6 @@ percona_server_libmysqlclient_map:
   5.6: libperconaserverclient18.1
   5.7: libperconaserverclient20
   8.0: libperconaserverclient21
+
+percona_server_asc_key: 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x4d1bb29d63d98e422b2113b19334a25f8507efa5'
+percona_server_asc_path: '/etc/apt/keyrings/percona.asc'
