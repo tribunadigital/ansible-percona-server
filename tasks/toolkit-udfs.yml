@@ -1,5 +1,13 @@
 # tasks file
 ---
+- name: toolkit udfs | check group replication status
+  ansible.builtin.shell: mysql -e "SHOW GLOBAL VARIABLES LIKE 'group_replication_group_name';" | awk 'NR>1 {print $2}'
+  register: group_replication_check
+  changed_when: false
+  failed_when: false
+  tags:
+    - percona-server-toolkit-udfs-check
+
 - name: toolkit udfs | create (lock) directory
   ansible.builtin.file:
     path: "{{ percona_server_lock_path }}"
@@ -7,6 +15,7 @@
     owner: root
     group: root
     mode: '0755'
+  when: group_replication_check.stdout == ""
   tags:
     - percona-server-toolkit-udfs-lock-directory
 
@@ -16,5 +25,6 @@
   args:
     creates: "{{ percona_server_lock_path }}/{{ item.soname }}"
   with_items: "{{ percona_server_toolkit_udfs }}"
+  when: group_replication_check.stdout == ""
   tags:
     - percona-server-toolkit-udfs-install
